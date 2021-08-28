@@ -29,8 +29,6 @@ rect.active:hover {
   text-align: center;
   background-color: lightgray;
   padding: 1ex;
-  margin-left: auto;
-  margin-right: auto;
   width: 6ex;
   font-size: 500%;
 }

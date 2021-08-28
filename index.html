@@ -7,7 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="manifest" href="manifest.json">
 		<link rel="stylesheet" href="style.css">
-		<link rel="stylesheet" href="bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="bootstrap.min.css">
 		<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 		<link rel="icon" type="image/png" sizes="512x512" href="icon512.png">
 		<link rel="shortcut icon" type="image/png" sizes="192x192" href="icon192.png">
@@ -15,20 +15,23 @@
 		<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="icon192.png">
 		<link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icon512.png">
 
+		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	</head>
 	<body>
 		<div class="container">
 		<div class="page-header">
-			<button type="button" class="pull-right btn btn-primary btn-lg" data-toggle="modal" data-target="#options-modal">Pause / Options</button>
 			<h1>Instant Recognition <small>beta</small></h1>
 		</div>
 		</div>
 
 		<div class="container">
-			<div>
-				<div id="symbol">&nbsp;</div>
+			<div class="text-center">
+				<div id="symbol" class="mx-auto">&nbsp;</div>
+			</div>
+			<div class="text-center mt-3">
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#options-modal">Pause / Options</button>
 			</div>
 		</div>
 
@@ -62,33 +65,33 @@
 						<div class="form-group">
 							<label for="input-pitch" class="col-sm-4 control-label">Pitch (Hz)</label>
 							<div class="col-sm-8">
-								<div class="btn-group" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-default"><input type="radio" name="input-pitch" value="700">700 Hz</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-pitch" value="750">750 Hz</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-pitch" value="800">800 Hz</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-pitch" value="850">850 Hz</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-pitch" value="900">900 Hz</button></label>
+								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="700">700 Hz</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="750">750 Hz</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="800">800 Hz</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="850">850 Hz</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="900">900 Hz</button></label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="input-wpm" class="col-sm-4 control-label"><abbr title="Words per minute">WPM</abbr></label>
 							<div class="col-sm-8">
-								<div class="btn-group" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-default"><input type="radio" name="input-wpm" value="5">5</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-wpm" value="13">13</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-wpm" value="15">15</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-wpm" value="20">20</button></label>
+								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="5">5</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="13">13</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="15">15</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="20">20</button></label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="input-wait" class="col-sm-4 control-label">Time Limit (per guess)</label>
+							<label for="input-wait" class="col-sm-4 control-label">Symbol pause</label>
 							<div class="col-sm-8">
-								<div class="btn-group" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-default"><input type="radio" name="input-wait" value="2">2 seconds</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-wait" value="5">5 seconds</button></label>
-									<label class="btn btn-default"><input type="radio" name="input-wait" value="0">No Limit</button></label>
+								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="1">1 second</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="2">2 seconds</button></label>
+									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="5">5 seconds</button></label>
 								</div>
 							</div>
 						</div>
@@ -97,8 +100,8 @@
 							<div id="active-symbols" class="col-sm-8"></div>
 						</div>
 						<div>
-							<button type="button" class="btn btn-primary" id="remove-symbol-button" data-dismiss="modal">Remove symbol</button>
-							<button type="button" class="btn btn-primary" id="add-symbol-button" data-dismiss="modal">Add symbol</button>
+							<button type="button" class="btn" id="remove-symbol-button" data-dismiss="modal">Remove symbol</button>
+							<button type="button" class="btn" id="add-symbol-button" data-dismiss="modal">Add symbol</button>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -109,7 +112,7 @@
 		</div>
 
 		<script src="jquery.min.js"></script>
-		<script src="bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="bootstrap.min.js"></script>
 		<script src="keymaster.min.js" type="text/javascript"></script>
 		<script src="morse.js" type="text/javascript"></script>
 		<script src="morsegame.js" type="text/javascript"></script>

@@ -57,7 +57,6 @@ function MorseGame() {
 	this.activateLetter();
 	this.activateLetter();
 
-	this.next_letter = "Q"; // always start with Q
 	this.next_letter = $(".letter.active").first().data("letter");
 
 	key("space", this.togglePause.bind(this));
@@ -92,7 +91,7 @@ MorseGame.prototype.togglePause = function(event) {
 		this.doLetter();
 	} else {
 		clearTimeout(this.letter_timeout);
-		$("#symbol").text(" ");
+		$("#symbol").html("&nbsp;");
 	}
 	$("#begin-modal").modal("hide");
 	$("#options-modal").modal(this.paused?"show":"hide");
