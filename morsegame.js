@@ -3,55 +3,61 @@ function MorseGame() {
 	this.letter_timeout;
 	this.streak = 0;
 	this.letters = [ // {{{
-		{letter: 'Q', score: 100, streak: 0, active: false},
-		{letter: 'Z', score: 100, streak: 0, active: false},
-		{letter: 'G', score: 100, streak: 0, active: false},
-		{letter: 'O', score: 100, streak: 0, active: false},
-		{letter: 'J', score: 100, streak: 0, active: false},
-		{letter: 'P', score: 100, streak: 0, active: false},
-		{letter: 'W', score: 100, streak: 0, active: false},
-		{letter: 'L', score: 100, streak: 0, active: false},
-		{letter: 'R', score: 100, streak: 0, active: false},
-		{letter: 'A', score: 100, streak: 0, active: false},
-		{letter: 'M', score: 100, streak: 0, active: false},
-		{letter: 'B', score: 100, streak: 0, active: false},
-		{letter: 'X', score: 100, streak: 0, active: false},
-		{letter: 'D', score: 100, streak: 0, active: false},
-		{letter: 'Y', score: 100, streak: 0, active: false},
-		{letter: 'C', score: 100, streak: 0, active: false},
+	/// LCWO KOCH order K M U R E S N A P T L W I . J Z = F O Y , V G 5 / Q 9 2 H 3 8 B ? 4 7 C 1 D 6 0 X
 		{letter: 'K', score: 100, streak: 0, active: false},
-		{letter: 'N', score: 100, streak: 0, active: false},
-		{letter: 'F', score: 100, streak: 0, active: false},
+		{letter: 'M', score: 100, streak: 0, active: false},
 		{letter: 'U', score: 100, streak: 0, active: false},
-		{letter: 'V', score: 100, streak: 0, active: false},
-		{letter: 'H', score: 100, streak: 0, active: false},
-		{letter: 'S', score: 100, streak: 0, active: false},
-		{letter: 'I', score: 100, streak: 0, active: false},
-		{letter: 'T', score: 100, streak: 0, active: false},
+		{letter: 'R', score: 100, streak: 0, active: false},
 		{letter: 'E', score: 100, streak: 0, active: false},
-		{letter: '0', score: 100, streak: 0, active: false},
-		{letter: '1', score: 100, streak: 0, active: false},
-		{letter: '2', score: 100, streak: 0, active: false},
-		{letter: '3', score: 100, streak: 0, active: false},
-		{letter: '4', score: 100, streak: 0, active: false},
+		{letter: 'S', score: 100, streak: 0, active: false},
+		{letter: 'N', score: 100, streak: 0, active: false},
+		{letter: 'A', score: 100, streak: 0, active: false},
+		{letter: 'P', score: 100, streak: 0, active: false},
+		{letter: 'T', score: 100, streak: 0, active: false},
+		{letter: 'L', score: 100, streak: 0, active: false},
+		{letter: 'W', score: 100, streak: 0, active: false},
+		{letter: 'I', score: 100, streak: 0, active: false},
+		{letter: '.', score: 100, streak: 0, active: false},
+		{letter: 'J', score: 100, streak: 0, active: false},
+		{letter: 'Z', score: 100, streak: 0, active: false},
+		{letter: '=', score: 100, streak: 0, active: false},
+		{letter: 'F', score: 100, streak: 0, active: false},
+		{letter: 'O', score: 100, streak: 0, active: false},
+		{letter: 'Y', score: 100, streak: 0, active: false},
+		{letter: ',', score: 100, streak: 0, active: false},
+		{letter: 'V', score: 100, streak: 0, active: false},
+		{letter: 'G', score: 100, streak: 0, active: false},
 		{letter: '5', score: 100, streak: 0, active: false},
-		{letter: '6', score: 100, streak: 0, active: false},
-		{letter: '7', score: 100, streak: 0, active: false},
-		{letter: '8', score: 100, streak: 0, active: false},
+		{letter: '/', score: 100, streak: 0, active: false},
+		{letter: 'Q', score: 100, streak: 0, active: false},
 		{letter: '9', score: 100, streak: 0, active: false},
+		{letter: '2', score: 100, streak: 0, active: false},
+		{letter: 'H', score: 100, streak: 0, active: false},
+		{letter: '3', score: 100, streak: 0, active: false},
+		{letter: '8', score: 100, streak: 0, active: false},
+		{letter: 'B', score: 100, streak: 0, active: false},
+		{letter: '?', score: 100, streak: 0, active: false},
+		{letter: '4', score: 100, streak: 0, active: false},
+		{letter: '7', score: 100, streak: 0, active: false},
+		{letter: 'C', score: 100, streak: 0, active: false},
+		{letter: '1', score: 100, streak: 0, active: false},
+		{letter: 'D', score: 100, streak: 0, active: false},
+		{letter: '6', score: 100, streak: 0, active: false},
+		{letter: '0', score: 100, streak: 0, active: false},
+		{letter: 'X', score: 100, streak: 0, active: false}
 	]; //}}}
 
 	this.ac = new (window.AudioContext || window.webkitAudioContext)();
-	this.wpm = 13;
-	this.guessLimit = 5;
-	this.pitch = 750;
+	this.wpm = 15;
+	this.guessLimit = 2;
+	this.pitch = 700;
 	this.morse = new MorseNode(this.ac, this.wpm, this.pitch);
 	this.morse.connect(this.ac.destination);
 
-	this.activateLetter("Q");
-	this.activateLetter("Z");
+	this.activateLetter();
+	this.activateLetter();
+
 	this.next_letter = "Q"; // always start with Q
-	//this.showBoard();
 	this.next_letter = $(".letter.active").first().data("letter");
 
 	key("space", this.togglePause.bind(this));
@@ -78,54 +84,22 @@ MorseGame.prototype.getActiveLetters = function() {
 
 MorseGame.prototype.togglePause = function(event) {
 	console.log("togglePause");
+	this.paused = !this.paused;
+
 	if (event)
 		event.preventDefault();
-	if (this.paused) {
+	if (!this.paused) {
 		this.doLetter();
-		this.listenForLetter();
 	} else {
 		clearTimeout(this.letter_timeout);
+		$("#symbol").text(" ");
 	}
-	this.paused = !this.paused;
 	$("#begin-modal").modal("hide");
 	$("#options-modal").modal(this.paused?"show":"hide");
 
 	active = game.getActiveLetters().map(x => x.letter);
 	$("#active-symbols").text(active.join(", "));
 	return false;
-}
-
-MorseGame.prototype.letterPressed = function(letter) {
-	var letter_index = this.getLetterIndex(this.next_letter);
-	var streak = 0;
-	if (letter == this.next_letter) {
-		this.letters[letter_index].score -= 5; // Decrement score
-		this.letters[letter_index].streak += 1; // Increment streak
-		this.streak++;
-
-		if (this.letters[letter_index].score <= 0) {
-			this.letters[letter_index].active = false;
-			this.letters[letter_index].score  = 0;
-		}
-	} else {
-		this.letters[letter_index].score += 7; // Increment score
-		if (this.letters[letter_index].score > 100) {
-			this.letters[letter_index].score = 100; // Limit score to 100
-		}
-		this.letters[letter_index].streak = 0; // Reset streak
-		this.streak = 0;
-	}
-
-	if (this.streak > 0 && this.streak % 10 == 0) {
-		this.activateLetter();
-		//this.next_letter = $(".letter").not(".active").first().data("letter")
-		//this.activateLetter(this.next_letter);
-		this.letter_timeout = setTimeout(this.doLetter.bind(this), 500);
-		return;
-	}
-	// update_board();
-	this.next_letter=null;
-	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), 500);
 }
 
 MorseGame.prototype.doNextLetter = function() {
@@ -135,25 +109,9 @@ MorseGame.prototype.doNextLetter = function() {
 		this.activateLetter();
 		active = this.getActiveLetters();
 	}
-	if (active.length == 0) {
-		// You won!
-		this.win();
-		return;
-	}
 	var next_index = Math.floor(Math.random() * active.length);
 	this.next_letter = active[next_index].letter;
 	this.doLetter();
-}
-
-MorseGame.prototype.listenForLetter = function() {
-	var mg = this;
-	key("A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9", function(event, handler) {
-		if (mg.next_letter == null) {
-			return;
-		}
-		clearTimeout(mg.letter_timeout);
-		mg.letterPressed(handler.shortcut);
-	});
 }
 
 MorseGame.prototype.doLetter = function() {
@@ -166,9 +124,7 @@ MorseGame.prototype.doLetter = function() {
 	$("#symbol").text(this.next_letter);
 
 	this.morse.playString(this.ac.currentTime, this.next_letter);
-	if (this.guessLimit > 0) {
-		this.letter_timeout = setTimeout(this.letterPressed.bind(this,null), this.guessLimit * 1000);
-	}
+	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), this.guessLimit * 1000);
 }
 
 MorseGame.prototype.activateLetter = function(letter) {
@@ -209,10 +165,6 @@ MorseGame.prototype.deactivateLetter = function(letter) {
 	//this.next_letter = letter;
 	this.letters[letter_index].active = false;
 	console.log(this.letters[letter_index]);
-}
-
-MorseGame.prototype.win = function() {
-	alert("Congratulations: you won");
 }
 
 MorseGame.prototype.setWPM = function(wpm) {
