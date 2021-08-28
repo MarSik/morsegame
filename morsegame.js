@@ -106,13 +106,16 @@ MorseGame.prototype.togglePause = function(event) {
 		this.doLetter();
 	} else {
 		clearTimeout(this.letter_timeout);
+
+        active = game.getActiveLetters().map(x => x.letter);
+        $("#active-symbols").text(active.join(", "));
+
 		$("#symbol").html("&nbsp;");
 	}
+
 	$("#begin-modal").modal("hide");
 	$("#options-modal").modal(this.paused?"show":"hide");
 
-	active = game.getActiveLetters().map(x => x.letter);
-	$("#active-symbols").text(active.join(", "));
 	return false;
 }
 
@@ -128,6 +131,13 @@ MorseGame.prototype.doNextLetter = function() {
 	this.doLetter();
 }
 
+MorseGame.prototype.endLetter = function() {
+	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), this.guessLimit * 1000);
+	$("#symbol").html("&nbsp;");
+
+	console.log("Wait for: " + this.guessLimit)
+}
+
 MorseGame.prototype.doLetter = function() {
 	// Play the letter, and set a timeout
 	if (this.next_letter == null) {
@@ -137,8 +147,9 @@ MorseGame.prototype.doLetter = function() {
 
 	$("#symbol").text(this.next_letter);
 
-	this.morse.playString(this.ac.currentTime, this.next_letter);
-	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), this.guessLimit * 1000);
+	var msgLengthS = this.morse.playString(this.ac.currentTime, this.next_letter) - this.ac.currentTime;
+	this.letter_timeout = setTimeout(this.endLetter.bind(this), msgLengthS * 1000);
+	console.log("Message length: " + msgLengthS)
 }
 
 MorseGame.prototype.activateLetter = function(letter) {
@@ -226,7 +237,8 @@ $(function() {
 	});
 	$("#save-options-button").on("click", function(event) {
 		game.setWPM($("input[name=input-wpm]:checked").val());
-		game.guessLimit = $("input[name=input-wait]:checked").val();
+		// multiplication to handle pitch as string 1 * "5" = 5
+		game.guessLimit = 1 * $("input[name=input-wait]:checked").val();
 		game.setPitch($("input[name=input-pitch]:checked").val());
 	});
 	$("#add-symbol-button").on("click", function(event) {

@@ -20,11 +20,11 @@ MorseNode.prototype.connect = function(target) {
 }
 
 MorseNode.prototype.setRate = function(rate) {
-    this._dot = 1.2 / rate; // formula from Wikipedia.
+    this._dot = 1.2 / rate; // 1 WPM = PARIS (50 dots) in 60s, 1 dot is 1.2s
 }
 
 MorseNode.prototype.setPitch = function(pitch) {
-    this._oscillator.frequency.value = pitch;
+    this._oscillator.frequency.value = 1 * pitch; // multiplication to handle pitch as string 1 * "5" = 5
 }
 
 MorseNode.prototype.MORSE = {
