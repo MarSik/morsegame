@@ -131,9 +131,15 @@ MorseGame.prototype.doNextLetter = function() {
 	this.doLetter();
 }
 
-MorseGame.prototype.endLetter = function() {
-	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), this.guessLimit * 1000);
+MorseGame.prototype.preLetter = function() {
+	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), this.guessLimit * 500);
 	$("#symbol").html("&nbsp;");
+
+	console.log("Wait for: " + this.guessLimit)
+}
+
+MorseGame.prototype.endLetter = function() {
+	this.letter_timeout = setTimeout(this.preLetter.bind(this), this.guessLimit * 500);
 
 	console.log("Wait for: " + this.guessLimit)
 }
