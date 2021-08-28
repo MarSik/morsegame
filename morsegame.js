@@ -62,6 +62,21 @@ function MorseGame() {
 	key("space", this.togglePause.bind(this));
 }
 
+MorseGame.prototype.unlockAudio = function() {
+    // based on https://paulbakaus.com/tutorials/html5/web-audio-on-ios/#Example_2_Unlocking_Web_Audio_the_smart_way
+    // create empty buffer
+    var buffer = this.ac.createBuffer(1, 1, 22050);
+    var source = this.ac.createBufferSource();
+    source.buffer = buffer;
+
+    // connect to output (your speakers)
+    source.connect(this.ac.destination);
+
+    // play the file
+    source.start(0);
+    console.log("Audio unlocked.");
+}
+
 MorseGame.prototype.getLetterIndex = function(letter) {
 	for (i = 0; i < this.letters.length; i++) {
 		if (this.letters[i].letter == letter) {
@@ -186,6 +201,11 @@ $(function() {
 			game.togglePause();
 		}
 	});
+
+    $("#go-button").on("click", function(event) {
+        // Unlock iOS and Android audio
+        game.unlockAudio();
+    })
 
 	$("#options-modal").on("shown.bs.modal", function() {
 		console.log("opening modal");
