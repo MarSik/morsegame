@@ -28,16 +28,26 @@ function MorseGame() {
 		{letter: 'S', score: 100, streak: 0, active: false},
 		{letter: 'I', score: 100, streak: 0, active: false},
 		{letter: 'T', score: 100, streak: 0, active: false},
-		{letter: 'E', score: 100, streak: 0, active: false}
+		{letter: 'E', score: 100, streak: 0, active: false},
+		{letter: '0', score: 100, streak: 0, active: false},
+		{letter: '1', score: 100, streak: 0, active: false},
+		{letter: '2', score: 100, streak: 0, active: false},
+		{letter: '3', score: 100, streak: 0, active: false},
+		{letter: '4', score: 100, streak: 0, active: false},
+		{letter: '5', score: 100, streak: 0, active: false},
+		{letter: '6', score: 100, streak: 0, active: false},
+		{letter: '7', score: 100, streak: 0, active: false},
+		{letter: '8', score: 100, streak: 0, active: false},
+		{letter: '9', score: 100, streak: 0, active: false},
 	]; //}}}
 
 	this.ac = new (window.AudioContext || window.webkitAudioContext)();
 	this.wpm = 13;
 	this.guessLimit = 5;
-	this.morse = new MorseNode(this.ac, this.wpm);
+	this.pitch = 750;
+	this.morse = new MorseNode(this.ac, this.wpm, this.pitch);
 	this.morse.connect(this.ac.destination);
 
-	this.setupBoard();
 	this.activateLetter("Q");
 	this.activateLetter("Z");
 	this.next_letter = "Q"; // always start with Q
@@ -79,6 +89,9 @@ MorseGame.prototype.togglePause = function(event) {
 	this.paused = !this.paused;
 	$("#begin-modal").modal("hide");
 	$("#options-modal").modal(this.paused?"show":"hide");
+
+	active = game.getActiveLetters().map(x => x.letter);
+	$("#active-symbols").text(active.join(", "));
 	return false;
 }
 
@@ -111,7 +124,6 @@ MorseGame.prototype.letterPressed = function(letter) {
 		return;
 	}
 	// update_board();
-	this.showBoard();
 	this.next_letter=null;
 	this.letter_timeout = setTimeout(this.doNextLetter.bind(this), 500);
 }
@@ -135,7 +147,7 @@ MorseGame.prototype.doNextLetter = function() {
 
 MorseGame.prototype.listenForLetter = function() {
 	var mg = this;
-	key("A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z", function(event, handler) {
+	key("A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9", function(event, handler) {
 		if (mg.next_letter == null) {
 			return;
 		}
@@ -150,6 +162,9 @@ MorseGame.prototype.doLetter = function() {
 		this.doNextLetter();
 		return;
 	}
+
+	$("#symbol").text(this.next_letter);
+
 	this.morse.playString(this.ac.currentTime, this.next_letter);
 	if (this.guessLimit > 0) {
 		this.letter_timeout = setTimeout(this.letterPressed.bind(this,null), this.guessLimit * 1000);
@@ -175,62 +190,25 @@ MorseGame.prototype.activateLetter = function(letter) {
 	this.letters[letter_index].active = true;
 	this.letters[letter_index].score = 100;
 	console.log(this.letters[letter_index]);
-	this.showBoard();
 }
 
-MorseGame.prototype.setupBoard = function() {
-	this.svg = d3.select("#graph")
-		.append("svg")
-		.attr("width", d3.select("#graph").node().offsetWidth)
-		.attr("height", 400);
+MorseGame.prototype.deactivateLetter = function(letter) {
+	if (letter === undefined) {
+		for (i = 0; i < this.letters.length; i++) {
+			if (this.letters[i].active) {
+				letter = this.letters[i].letter;
+			}
+		}
+	}
+	if (letter === undefined) {
+		// No more letters to deactivate
+		return false;
+	}
 
-	var margin = {top:40, right: 0, bottom: 30, left: 0};
-	this.graph = {
-		width: +this.svg.attr("width") - margin.left - margin.right,
-		height: +this.svg.attr("height") - margin.top - margin.bottom
-	};
-
-	this.graph.x = d3.scaleBand()
-		.rangeRound([0, this.graph.width])
-		.padding(0.4)
-		.domain(this.letters.map(function(i){return i.letter})) ;
-	this.graph.y = d3.scaleLinear()
-		.rangeRound([this.graph.height, 0])
-		.domain([0,1]);
-
-	this.graph.g = this.svg.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-	this.graph.g.append("g")
-		.attr("class", "axis axis--x")
-		.attr("transform", "translate(0," + this.graph.height + ")")
-		.call(d3.axisBottom(this.graph.x).tickSize(0));
-
-	this.graph.g.append("g")
-		.attr("class", "axis axis--y")
-		.call(d3.axisLeft(this.graph.y).ticks(4, "%").tickSize(-this.graph.width).tickFormat(""));
-}
-
-MorseGame.prototype.showBoard = function() {
-
-	var t = d3.transition()
-	    .duration(1000)
-	    .ease(d3.easePolyOut);
-	bars = this.graph.g.selectAll("rect")
-		.data(this.letters);
-
-	bars.enter()
-		.append("rect")
-		.attr("x", function(d) { return this.graph.x(d.letter); }.bind(this))
-		.attr("data-letter", function(d) { return d.letter } )
-		.attr("width", this.graph.x.bandwidth())
-		.attr("height", 0)
-		.attr("y", this.graph.y(0));
-	bars
-		.attr("class", function(d) { return d.active? "active" : "inactive"} )
-		.transition(t)
-		.attr("y", function(d) { return this.graph.y(d.score / 100); }.bind(this))
-		.attr("height", function(d) { return this.graph.height - this.graph.y(d.score / 100); }.bind(this));
+	var letter_index = this.getLetterIndex(letter);
+	//this.next_letter = letter;
+	this.letters[letter_index].active = false;
+	console.log(this.letters[letter_index]);
 }
 
 MorseGame.prototype.win = function() {
@@ -240,6 +218,11 @@ MorseGame.prototype.win = function() {
 MorseGame.prototype.setWPM = function(wpm) {
 	this.wpm = wpm;
 	this.morse.setRate(this.wpm);
+}
+
+MorseGame.prototype.setPitch = function(pitch) {
+	this.pitch = pitch;
+	this.morse.setPitch(this.pitch);
 }
 
 $(function() {
@@ -262,6 +245,8 @@ $(function() {
 		$("input[name=input-wpm][value="+game.wpm+"]").prop("checked", true).parent("label").addClass("active");
 		$("input[name=input-wait]").parent("label").removeClass("active");
 		$("input[name=input-wait][value="+game.guessLimit+"]").prop("checked", true).parent("label").addClass("active");
+		$("input[name=input-pitch]").parent("label").removeClass("active");
+        $("input[name=input-pitch][value="+game.pitch+"]").prop("checked", true).parent("label").addClass("active");
 	});
 	$("#options-modal").on("hide.bs.modal", function() {
 		if (game.paused) {
@@ -271,5 +256,18 @@ $(function() {
 	$("#save-options-button").on("click", function(event) {
 		game.setWPM($("input[name=input-wpm]:checked").val());
 		game.guessLimit = $("input[name=input-wait]:checked").val();
+		game.setPitch($("input[name=input-pitch]:checked").val());
 	});
+	$("#add-symbol-button").on("click", function(event) {
+	    game.activateLetter();
+	    active = game.getActiveLetters().map(x => x.letter);
+	    $("#active-symbols").text(active.join(", "));
+	    return false;
+	});
+	$("#remove-symbol-button").on("click", function(event) {
+        game.deactivateLetter();
+	    active = game.getActiveLetters().map(x => x.letter);
+	    $("#active-symbols").text(active.join(", "));
+	    return false;
+    });
 });

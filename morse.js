@@ -1,10 +1,10 @@
-function MorseNode(ac, rate) {
+function MorseNode(ac, rate, pitch) {
     // ac is an audio context.
     this._oscillator = ac.createOscillator();
     this._gain = ac.createGain();
 
     this._gain.gain.value = 0;
-    this._oscillator.frequency.value = 750;
+    this._oscillator.frequency.value = pitch;
 
     this._oscillator.connect(this._gain);
 
@@ -21,6 +21,10 @@ MorseNode.prototype.connect = function(target) {
 
 MorseNode.prototype.setRate = function(rate) {
     this._dot = 1.2 / rate; // formula from Wikipedia.
+}
+
+MorseNode.prototype.setPitch = function(pitch) {
+    this._oscillator.frequency.value = pitch;
 }
 
 MorseNode.prototype.MORSE = {
