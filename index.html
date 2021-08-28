@@ -64,35 +64,29 @@
 					<div class="modal-body form-horizontal">
 						<div class="form-group">
 							<label for="input-pitch" class="col-sm-4 control-label">Pitch (Hz)</label>
-							<div class="col-sm-8">
-								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="700">700 Hz</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="750">750 Hz</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="800">800 Hz</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="850">850 Hz</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-pitch" value="900">900 Hz</button></label>
-								</div>
+							<div class="row col-sm-8 btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-pitch" value="700">700 Hz</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-pitch" value="750">750 Hz</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-pitch" value="800">800 Hz</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-pitch" value="850">850 Hz</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-pitch" value="900">900 Hz</button></label>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="input-wpm" class="col-sm-4 control-label"><abbr title="Words per minute">WPM</abbr></label>
-							<div class="col-sm-8">
-								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="5">5</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="13">13</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="15">15</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-wpm" value="20">20</button></label>
-								</div>
+							<div class="row col-sm-8 btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wpm" value="5">5</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wpm" value="13">13</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wpm" value="15">15</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wpm" value="20">20</button></label>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="input-wait" class="col-sm-4 control-label">Symbol pause</label>
-							<div class="col-sm-8">
-								<div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
-									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="1">1 second</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="2">2 seconds</button></label>
-									<label class="btn btn-secondary"><input type="radio" name="input-wait" value="5">5 seconds</button></label>
-								</div>
+							<div class="row col-sm-8 btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="...">
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wait" value="1">1 second</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wait" value="2">2 seconds</button></label>
+								<label class="btn btn-secondary col-6 col-sm-4"><input type="radio" name="input-wait" value="5">5 seconds</button></label>
 							</div>
 						</div>
 						<div class="form-group">
@@ -100,8 +94,8 @@
 							<div id="active-symbols" class="col-sm-8"></div>
 						</div>
 						<div>
-							<button type="button" class="btn" id="remove-symbol-button" data-dismiss="modal">Remove symbol</button>
-							<button type="button" class="btn" id="add-symbol-button" data-dismiss="modal">Add symbol</button>
+							<button type="button" class="btn btn-secondary col-5" id="remove-symbol-button" data-dismiss="modal">Remove symbol</button>
+							<button type="button" class="btn btn-secondary col-5" id="add-symbol-button" data-dismiss="modal">Add symbol</button>
 						</div>
 					</div>
 					<div class="modal-footer">
