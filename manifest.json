@@ -1,6 +1,7 @@
 {
   "short_name": "Instant Recognition",
   "name": "Instant Recognition: morse symbol training",
+  "offline_enabled": true,
   "icons": [
     {
       "src": "icon192.png",
@@ -13,10 +14,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://marsik.github.io/morsegame/",
+  "start_url": "https://morse.marsik.org/index.html",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "https://marsik.github.io/morsegame/",
+  "scope": "/",
   "theme_color": "#3367D6",
   "description": "This app plays morse symbols while displaying them on screen. This will teach your brain to recognize morse code instantly, without thinking. The specific form of association (sound to visual) is meant to engage different brain centers to allow your reading center to form words.",
   "screenshots": [
